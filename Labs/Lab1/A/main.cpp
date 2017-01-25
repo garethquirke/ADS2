@@ -2,6 +2,7 @@
 // Date: 24th January 2017
 
 #include<iostream>
+#include <algorithm>
 #include "Product.h"
 #include "Software.h"
 #include "Book.h"
@@ -9,6 +10,7 @@ using namespace std;
 
 // Declaration
 void sort(Product *array[10]);
+void print(Product *array[10]);
 
 int main() {
 
@@ -18,8 +20,6 @@ int main() {
 	// pointer to a: book, software
 	Book *book;
 	Software *software;
-
-	
 
 	// enter details for a book and a software item
 	// store the addresses in the pointers created above
@@ -68,24 +68,37 @@ int main() {
 		}
 	}
 
-	// print price of each item
-	for (int i = 0; i < 10; i++) {
-		cout << products[i]->getGrossPrice() << endl;
-	}
-
-
-	// create a sort function to sort by ascending order of price
-
+	// run sort algortihm and reprint the array
+	sort(products);
+	print(products);
 
 	system("pause");
 	return 0;
 }
+
+// print price of each item
+void print(Product * products[10]) {
+	for (int i = 0; i < 10; i++) {
+		cout << products[i]->getGrossPrice() << endl;
+	}
+}
+
+// create a sort function to sort by ascending order of price
 // Bubble sort
 void sort(Product * products[10])
 {
-	for (int i = 0; i < 10; i++) {
-		if (products[i + 1]->getGrossPrice() < products[i]->getGrossPrice()) {
-			// finsish this part
+	bool swap = false;
+	Product*temp;
+	do {
+		swap = false;
+
+		for (int i = 1; i < 10; i++) {
+			if (products[i - 1]->getGrossPrice() > products[i]->getGrossPrice()) {
+				temp = products[i];
+				products[i] = products[i - 1];
+				products[i - 1] = temp;
+				swap = true;
+			}
 		}
-	}
+	} while (swap);
 }
