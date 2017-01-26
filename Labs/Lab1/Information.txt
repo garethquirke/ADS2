@@ -1,0 +1,10 @@
+A covers:
+- polymorphism
+- array of pointers
+- sort method
+
+B covers:
+- overloaded operators
+- comparing strings
+- abstract class
+- virtual methods
