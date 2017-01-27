@@ -19,10 +19,12 @@ int main() {
 	//personPtr = new Person("Timbo Timber");
 	//personPtr->printName();
 
-	personPtr = new Employee("Tim Canterbury", 40000);
+	Customer c("Bishop Muzorewa", "this is a complaint");
+	personPtr = &c;
 	personPtr->printName();
 
-	personPtr = new Customer("Bishop Muzorewa", "this is a complaint");
+	Employee e("Tim Canterbury", 40000);
+	personPtr = &e;
 	personPtr->printName();
 
 	system("pause");
