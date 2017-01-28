@@ -5,15 +5,16 @@ using namespace std;
 
 class Person abstract
 {
+	friend bool operator>(const Person& person, const Person& otherPerson);
+
 protected:
-	string name;
+	
 public:
 	Person(string); // initialise the name
 	// when virtual is taken out, overriding within the subclasses is not allowed
 	virtual void printName();
-
-	// comparison method to sort by name
-	bool operator>(const Person&p);
+	string name;
+	string getName();
 };
 
 /* From the cake book

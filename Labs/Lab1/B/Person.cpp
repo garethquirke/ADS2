@@ -11,15 +11,17 @@ void Person::printName()
 {
 	cout << "Name: " << name << endl;
 }
-
-bool Person::operator>(const Person & p)
+string Person::getName()
 {
-	// iterate through the name
-	for (int i = 0; i < name.length; i++) {
-		if (name.at(i) > p.name.at(i)) {
-			{
-				return true;
-			}
+	return string();
+}
+
+bool operator>(const Person& person, const Person& otherPerson)
+{
+	for (int i = 0; i < person.name.length() && i <= otherPerson.name.length(); i++) {
+		// > 0 = true means there is a difference between them
+		if (person.name.compare(otherPerson.name) > 0) {
+			return true;
 		}
 		return false;
 	}
