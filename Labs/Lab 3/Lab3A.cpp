@@ -33,7 +33,7 @@ Usage: Based on this implementation structure. Modifying it to suit the paramter
 void merge(int array[], int start, int length)
 {
 	// temporrary array to be filled with sorted members
-	int *temp = new int[length];
+	int *temp = new int[length + 1];
 
 	int mid = (start + length) / 2;
 	// two variables to keep track of the the two halfs
@@ -80,6 +80,10 @@ void merge(int array[], int start, int length)
 		array[firstHalf] = temp[firstHalf];
 	}
 
+	// delete can be called since there is an extra space in the temporary array
+	// this avoids the heap corruption error
+	delete[] temp;
+	temp = NULL;
 }
 int main()
 {
@@ -107,7 +111,7 @@ int main()
 	const int count = 50;
 	int array3[count];
 	for (int i = 0; i < count; i++) {
-		array3[i] = rand() % 100;
+		array3[i] = rand() % 1000;
 	}
 	cout << "unsorted list" << endl;
 	for (int i = 0; i < count; i++) {
@@ -119,6 +123,7 @@ int main()
 	for (int i = 0; i < count; i++) {
 		cout << array3[i] << ", ";
 	}
+	cout << endl;
 	system("pause");
 	return 0;
 }
