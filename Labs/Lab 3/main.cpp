@@ -70,7 +70,7 @@ void merge(int array[], int start, int length)
 		current++;
 		firstHalf++;
 	}
-	while (secondHalf<= mid) {
+	while (secondHalf <= mid) {
 		temp[current] = array[secondHalf];
 		current++;
 		secondHalf++;
@@ -79,6 +79,7 @@ void merge(int array[], int start, int length)
 	for (firstHalf = start; firstHalf < current; firstHalf++) {
 		array[firstHalf] = temp[firstHalf];
 	}
+
 }
 int main()
 {
@@ -99,6 +100,25 @@ int main()
 		cout << array[i] << ", ";
 	}
 	cout << endl;
+
+
+
+	// second test for larger array
+	const int count = 50;
+	int array3[count];
+	for (int i = 0; i < count; i++) {
+		array3[i] = rand() % 100;
+	}
+	cout << "unsorted list" << endl;
+	for (int i = 0; i < count; i++) {
+		cout << array3[i] << ", ";
+	}
+	cout << endl;
+	mergeSort(array3, 0, count - 1);
+	cout << "After sort" << endl;
+	for (int i = 0; i < count; i++) {
+		cout << array3[i] << ", ";
+	}
 	system("pause");
 	return 0;
 }
