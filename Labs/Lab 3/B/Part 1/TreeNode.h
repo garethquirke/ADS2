@@ -9,10 +9,4 @@ private:
 	TreeNode *right;
 public:
 	TreeNode(int);
-	int getNumber();
-
-	TreeNode *getRight();
-	TreeNode *getLeft();
-
-	void displayNode();
 };
