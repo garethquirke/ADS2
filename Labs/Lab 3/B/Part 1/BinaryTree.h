@@ -10,7 +10,7 @@ private:
 	int height(TreeNode*);
 public:
 	BinaryTree();
-
+	~BinaryTree();
 	// recursion methods
 	void add(int);
 	int height();

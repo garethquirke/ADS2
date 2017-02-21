@@ -9,4 +9,5 @@ private:
 	TreeNode *right;
 public:
 	TreeNode(int);
+	~TreeNode();
 };

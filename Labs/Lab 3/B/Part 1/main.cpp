@@ -7,14 +7,13 @@ using namespace std;
 
 int main() {
 	BinaryTree tree;
-
+	
+	tree.add(10);
+	tree.add(15);
 	tree.add(5);
-	tree.add(4);
-	tree.add(7);
-	tree.add(2);
-	tree.add(6);
+	tree.add(25);
 
-	cout << tree.height();
+	cout << tree.height() << endl;
 
 	system("pause");
 	return 0;

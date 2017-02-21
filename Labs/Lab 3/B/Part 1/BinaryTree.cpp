@@ -1,5 +1,4 @@
 #include <iostream>
-#include <ctime>
 #include <algorithm>
 #include "BinaryTree.h"
 #include "TreeNode.h"
@@ -22,7 +21,7 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 
 	else if (node->number > root->number) {
 		if (root->right == NULL) {
-			root->right == node;
+			root->right = node;
 		}
 		else {
 			add(node, root->right);
@@ -30,9 +29,9 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 	}
 }
 /*
-Source: Maths HWS EDU
+Source: height in C
 Usage: used
-Availible From: http://math.hws.edu/eck/cs225/s03/binary_trees/
+Availible From: http://www.techcrashcourse.com/2016/06/program-to-find-height-of-binary-tree.html
 */
 int BinaryTree::height(TreeNode *root)
 {
@@ -41,18 +40,18 @@ int BinaryTree::height(TreeNode *root)
 		return 0;
 	}
 	else {
-		// count the first node at the root
-		int count = 1;
-		// count subtree nodes
-		count += height(root->left);
-		count += height(root->right);
-		return count;
+		return 1 + max(height(root->left), height(root->right));
 	}
 }
 
 
 BinaryTree::BinaryTree() : root(NULL)
 {
+}
+
+BinaryTree::~BinaryTree()
+{
+	delete root;
 }
 
 void BinaryTree::add(int number)
