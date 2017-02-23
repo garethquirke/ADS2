@@ -61,10 +61,10 @@ bool BinaryTree::search(char letter, TreeNode *root)
 
 void BinaryTree::InOrderTransverse(TreeNode *root)
 {
-	if (root!=NULL) {
+	if (root != NULL) {
 		InOrderTransverse(root->left);
 		cout << root->letter << endl;
-		InOrderTransverse(root->left);
+		InOrderTransverse(root->right);
 	}
 }
 
@@ -79,9 +79,10 @@ BinaryTree::~BinaryTree()
 
 void BinaryTree::add(char letter)
 {
-	TreeNode* node = new TreeNode(letter);
+	TreeNode *node = new TreeNode(letter);
 	if (root == NULL) {
 		root = node;
+		return;
 	}
 	else {
 		add(node, root);

@@ -34,8 +34,10 @@ int main() {
 	result('v', tree);
 	cout << endl << endl;
 	cout << "in order sort" << endl;
-
 	tree.sort();
+
+
+
 	system("pause");
 	return 0;
 }
