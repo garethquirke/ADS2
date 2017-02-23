@@ -1,22 +1,22 @@
 #pragma once
 #include "TreeNode.h"
-// the binary tree maintains a pointer to the root/head of list
+
 class BinaryTree {
-	
+
 private:
 	TreeNode *root;
 	void add(TreeNode*, TreeNode*);
-	
 	int height(TreeNode*);
 
-	int hasPathSum(struct TreeNode*, int);
-
+	int hasPathSum(TreeNode*, int);
+	void printPaths(TreeNode*, int path[], int pathLength);
+	
 public:
-	BinaryTree();
 	~BinaryTree();
-	// recursion methods
+	BinaryTree();
 	void add(int);
 	int height();
 
-	bool hasSum(int);
+	bool hasPathSum(int);
+	void printPaths();
 };

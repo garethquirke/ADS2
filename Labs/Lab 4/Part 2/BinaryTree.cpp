@@ -1,24 +1,18 @@
+#include "BinaryTree.h"
 #include <iostream>
 #include <algorithm>
-#include "BinaryTree.h"
-#include "TreeNode.h"
 using namespace std;
 
-// Private recursive methods add and height
 void BinaryTree::add(TreeNode *node, TreeNode *root)
 {
-	// work left to right
 	if (node->number < root->number) {
-		// left is empty add it 
 		if (root->left == NULL) {
 			root->left = node;
 		}
 		else {
-			// recursive call working down the tree
 			add(node, root->left);
 		}
 	}
-
 	else if (node->number > root->number) {
 		if (root->right == NULL) {
 			root->right = node;
@@ -28,42 +22,68 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 		}
 	}
 }
-/*
-Source: height in C
-Usage: used
-Availible From: http://www.techcrashcourse.com/2016/06/program-to-find-height-of-binary-tree.html
-*/
+
 int BinaryTree::height(TreeNode *root)
 {
-	// check for empty tree
+
 	if (root == NULL) {
-		return 0;
+		return -1;
 	}
+
+	// return 1 and then recursively run this method again based on the higher value of either side
 	else {
 		return 1 + max(height(root->left), height(root->right));
 	}
 }
-
+/*
+Source: stanford university - binary trees
+Availible from: http://cslibrary.stanford.edu/110/BinaryTrees.html
+Usage: Modified - 20%
+*/
 int BinaryTree::hasPathSum(TreeNode *root, int sum)
 {
 	if (root == NULL) {
-		return false;
+		return (sum == 0);
 	}
-	if (root->number == sum && root->right == NULL && root->left == NULL) {
-		return true;
+	else {
+		int summary = sum - root->number;
+		return(hasPathSum(root->left, summary) || hasPathSum(root->right, summary));
 	}
-
-	return hasPathSum(root->left,(sum - root->number) || (root->right , (sum - root->number)));
 }
 
+void printArray(int path[], int length) {
+	for (int i = 0; i < length; i++) {
+		cout << path[i] << ",";
+	}
+	cout << endl;
+}
 
-BinaryTree::BinaryTree() : root(NULL)
+void BinaryTree::printPaths(TreeNode *root, int path[], int pathLength)
 {
+	if (root == NULL) {
+		return;
+	}
+
+	path[pathLength] = root->number;
+	pathLength++;
+
+	if ((root->left == NULL) && (root->right == NULL)) {
+		printArray(path, pathLength);
+	}
+	else {
+		printPaths(root->left, path, pathLength);
+		printPaths(root->right, path, pathLength);
+	}
 }
+
 
 BinaryTree::~BinaryTree()
 {
-	delete root;
+	root = NULL;
+}
+
+BinaryTree::BinaryTree() : root(NULL)
+{
 }
 
 void BinaryTree::add(int number)
@@ -80,11 +100,16 @@ void BinaryTree::add(int number)
 
 int BinaryTree::height()
 {
-	// start at root, recursively span across the tree
 	return height(root);
 }
 
-bool BinaryTree::hasSum(int sum)
+bool BinaryTree::hasPathSum(int sum)
 {
 	return hasPathSum(root, sum);
+}
+
+void BinaryTree::printPaths()
+{
+	int path[1000];
+	printPaths(root, path, 0);
 }
