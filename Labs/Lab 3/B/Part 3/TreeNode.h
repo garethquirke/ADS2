@@ -1,6 +1,6 @@
 #pragma once
 #include "BinaryTree.h"
-// changes: adding in the same h file so the linker recognizes both templates
+
 template<typename T>
 class TreeNode {
 

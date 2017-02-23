@@ -3,20 +3,6 @@
 #include <iostream>
 using namespace std;
 
-// function to simlifity search test with template type T
-template <class T>
-void find(T data, BinaryTree<char> tree) {
-	bool result;
-	result = tree.search(data);
-
-	if (result == true) {
-		cout << "Query for: " << data << " was found" << endl;
-	}
-	else {
-		cout << "Query for: " << data << "not found" << endl;
-	}
-}
-
 int main() {
 
 
@@ -29,11 +15,6 @@ int main() {
 	cout << "Height: " << tree.height() << endl;
 	cout << "Tree Sort" << endl;
 	tree.sort();
-
-	//find('g', tree);
-	//find('a', tree);
-	//find('r', tree);
-
 
 	system("pause");
 	return 0;

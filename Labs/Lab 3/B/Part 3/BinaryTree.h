@@ -13,7 +13,6 @@ private:
 	TreeNode<T> *root;
 	void add(TreeNode<T> *node, TreeNode<T> *root);
 	int height(TreeNode<T> *root);
-	bool search(T query,TreeNode<T> *root);
 	void InOrderTransversal(TreeNode<T> *root);
 
 public:
@@ -21,7 +20,6 @@ public:
 	~BinaryTree();
 
 	void add(T data);
-	bool search(T data);
 	int height();
 	void sort();
 };
@@ -59,25 +57,6 @@ int BinaryTree<T>::height(TreeNode<T> *root)
 }
 
 template<typename T>
-bool BinaryTree<T>::search(T query, TreeNode<T> *root)
-{
-	if (root == NULL) {
-		return false;
-	}
-
-	else if (root->data == query) {
-		return true;
-	}
-
-	else if (root->data > query) {
-		return search(query, root->left);
-	}
-	else if (root->data < query) {
-		return search(query, root->right);
-	}
-}
-
-template<typename T>
 void BinaryTree<T>::InOrderTransversal(TreeNode<T> *root)
 {
 	if (root != NULL) {
@@ -111,11 +90,6 @@ void BinaryTree<T>::add(T data)
 	}
 }
 
-template<typename T>
-bool BinaryTree<T>::search(T data)
-{
-	return search(data, root);
-}
 
 template<typename T>
 int BinaryTree<T>::height()
