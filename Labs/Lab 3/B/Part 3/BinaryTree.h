@@ -1,43 +1,33 @@
 #pragma once
+#include <iostream>
+#include <algorithm>
+#include "TreeNode.h"
+using namespace std;
 
 template<typename T>
 class BinaryTree {
-private:
-	TreeNode<T> *root;
 
+
+private:
+
+	TreeNode<T> *root;
 	void add(TreeNode<T> *node, TreeNode<T> *root);
 	int height(TreeNode<T> *root);
-	bool search(T query, TreeNode*root);
+	bool search(T query,TreeNode<T> *root);
 	void InOrderTransversal(TreeNode<T> *root);
 
 public:
 	BinaryTree();
 	~BinaryTree();
 
-	void add(T);
-	bool search();
+	void add(T data);
+	bool search(T data);
 	int height();
 	void sort();
 };
 
-// changes: adding in the same h file so the linker recognizes both templates
 template<typename T>
-class TreeNode {
-
-private:
-	TreeNode *left;
-	T data;
-	TreeNode *right;
-
-public:
-	TreeNode(T);
-	~TreeNode();
-};
-
-
-
-template<type T>
-void BinaryTree<T>::add(TreeNode *node, TreeNode *root)
+void BinaryTree<T>::add(TreeNode<T> *node, TreeNode<T> *root)
 {
 	if (node->data < root->data) {
 		if (root->left == NULL) {
@@ -58,7 +48,7 @@ void BinaryTree<T>::add(TreeNode *node, TreeNode *root)
 }
 
 template<typename T>
-int BinaryTree<T>::height(TreeNode *root)
+int BinaryTree<T>::height(TreeNode<T> *root)
 {
 	if (root == NULL) {
 		return -1;
@@ -69,27 +59,31 @@ int BinaryTree<T>::height(TreeNode *root)
 }
 
 template<typename T>
-bool BinaryTree<T>::search(T query, TreeNode *start)
+bool BinaryTree<T>::search(T query, TreeNode<T> *root)
 {
-	if (start == NULL) {
+	if (root == NULL) {
 		return false;
 	}
 
-	else if (start->data == query) {
-		return search(data, start->left);
+	else if (root->data == query) {
+		return true;
 	}
 
+	else if (root->data > query) {
+		return search(query, root->left);
+	}
 	else if (root->data < query) {
-		return search(data, start->right);
+		return search(query, root->right);
 	}
 }
 
 template<typename T>
-void BinaryTree<T>::InOrderTransversal(TreeNode *start)
+void BinaryTree<T>::InOrderTransversal(TreeNode<T> *root)
 {
-	if (start != NULL) {
-		InOrderTransversal(start->left);
-		cout << start->data;
+	if (root != NULL) {
+		InOrderTransversal(root->left);
+		cout << root->data << endl;
+		InOrderTransversal(root->right);
 	}
 }
 
@@ -107,7 +101,7 @@ BinaryTree<T>::~BinaryTree()
 template<typename T>
 void BinaryTree<T>::add(T data)
 {
-	TreeNode *node = new TreeNode(data);
+	TreeNode<T> *node = new TreeNode<T>(data);
 	if (root == NULL) {
 		root = node;
 		return;
@@ -118,9 +112,9 @@ void BinaryTree<T>::add(T data)
 }
 
 template<typename T>
-bool BinaryTree<T>::search()
+bool BinaryTree<T>::search(T data)
 {
-	return false;
+	return search(data, root);
 }
 
 template<typename T>
@@ -133,24 +127,4 @@ template<typename T>
 void BinaryTree<T>::sort()
 {
 	InOrderTransversal(root);
-}
-
-
-
-
-
-template<typename T>
-inline TreeNode<T>::TreeNode(T dataIn)
-{
-	left = NULL;
-	data = dataIn;
-	right = NULL;
-}
-
-template<typename T>
-inline TreeNode<T>::~TreeNode()
-{
-	delete left;
-	delete data;
-	delete right;
 }
