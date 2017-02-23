@@ -50,7 +50,11 @@ int BinaryTree::hasPathSum(TreeNode *root, int sum)
 		return(hasPathSum(root->left, summary) || hasPathSum(root->right, summary));
 	}
 }
-
+/*
+Source: standord university
+Availible from: http://cslibrary.stanford.edu/110/BinaryTrees.html
+Usage: Based on
+*/
 void printArray(int path[], int length) {
 	for (int i = 0; i < length; i++) {
 		cout << path[i] << ",";
