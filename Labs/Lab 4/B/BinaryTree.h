@@ -27,4 +27,6 @@ public:
 	// Lab 4B Additions
 	int minValue();
 	int maxValue();
+
+	int isBST(TreeNode*);
 };

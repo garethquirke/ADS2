@@ -150,3 +150,18 @@ int BinaryTree::maxValue()
 
 	return maxValue(root);
 }
+// source to add possibly: http://www.geeksforgeeks.org/a-program-to-check-if-a-binary-tree-is-bst-or-not/
+int BinaryTree::isBST(TreeNode *root)
+{
+	if (root == NULL) {
+		return 0;
+	}
+
+	/* To Check
+	 * Is the minium value <= to current(root)?
+	 * is the max of the left greater than current(root)?
+	 * 
+	 */
+
+	return 0;
+}
