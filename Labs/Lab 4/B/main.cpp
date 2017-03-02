@@ -37,6 +37,11 @@ int main() {
 	cout << "Lab4 B extensions" << endl;
 	cout << "Minimum value found in tree: " << tree.minValue() << endl;
 	cout << "Maximum value found in tree: " << tree.maxValue() << endl;
+	cout << "Is BST? 0: no, 1: yes" << endl;
+	cout << "using the helper methods (Uneffecient)" << endl;
+	cout << tree.isBst() << endl;
+	cout << "Using effiecient version" << endl;
+	cout << tree.isBSTEff() << endl;
 
 	system("pause");
 	return 0;

@@ -14,6 +14,8 @@ private:
 	// Lab 4B Additions
 	int minValue(TreeNode*);
 	int maxValue(TreeNode*);
+	int isBST(TreeNode*);
+	int isBSTEff(TreeNode *root, int min, int max);
 	
 public:
 	~BinaryTree();
@@ -27,6 +29,7 @@ public:
 	// Lab 4B Additions
 	int minValue();
 	int maxValue();
-
-	int isBST(TreeNode*);
+	int isBst();
+	int isBSTEff();
+	
 };
