@@ -17,8 +17,6 @@ private:
 	void preOrderTransversal(TreeNode<T> *root);
 	void postOrderTransversal(TreeNode<T> *root);
 
-	bool isLeaf(TreeNode<T> *root);
-
 public:
 	BinaryTree();
 	~BinaryTree();
@@ -30,7 +28,6 @@ public:
 	void preOrderTransversal();
 	void postOrderTransversal();
 
-	bool isLeaf();
 };
 
 template<typename T>
@@ -70,7 +67,7 @@ inline void BinaryTree<T>::inOrderTransversal(TreeNode<T>* root)
 {
 	if (root != NULL) {
 		inOrderTransversal(root->left);
-		cout << root->data << endl;
+		cout << root->data << ",";
 		inOrderTransversal(root->right);
 	}
 }
@@ -93,15 +90,6 @@ inline void BinaryTree<T>::postOrderTransversal(TreeNode<T>* root)
 		postOrderTransversal(root->right);
 		cout << root->data << ",";
 	}
-}
-
-template<typename T>
-inline bool BinaryTree<T>::isLeaf(TreeNode<T>* root)
-{
-		if (root->left == NULL && root->right == NULL) {
-			return true;
-		}
-		return false;
 }
 
 template<typename T>
@@ -151,14 +139,3 @@ inline void BinaryTree<T>::postOrderTransversal()
 {
 	postOrderTransversal(root);
 }
-
-template<typename T>
-inline bool BinaryTree<T>::isLeaf()
-{
-	if (root == NULL) {
-		return false;
-	}
-	isLeaf(root);
-}
-
-
