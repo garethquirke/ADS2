@@ -1,4 +1,5 @@
 #include "BinaryTree.h"
+#include <algorithm>
 
 void BinaryTree::add(TreeNode *node, TreeNode *root)
 {
@@ -24,7 +25,7 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 				add(node, root->right);
 			}
 		}
-	}	
+	}
 }
 
 /*
@@ -32,12 +33,12 @@ Source: http://cslibrary.stanford.edu/110/BinaryTrees.html
 Name: Binary tree lookup, stanford university
 Usage: Based on
 */
-bool BinaryTree::checkIFInTree(City* city,TreeNode *root)
+bool BinaryTree::checkIFInTree(City* city, TreeNode *root)
 {
 	if (root == NULL) {
 		return false;
 	}
-	else if (city->getCoordinates().first  == root->city->getCoordinates().first) {
+	else if (city->getCoordinates().first == root->city->getCoordinates().first) {
 		return true;
 	}
 	else if (city->getCoordinates().second == root->city->getCoordinates().second) {
@@ -53,23 +54,69 @@ bool BinaryTree::checkIFInTree(City* city,TreeNode *root)
 	}
 }
 
-BinaryTree::BinaryTree()  : root(NULL)
+int BinaryTree::height(TreeNode *root)
 {
-}
-
-BinaryTree::~BinaryTree()
-{
-	root = NULL;
-}
-
-void BinaryTree::add(City* city)
-{
-	TreeNode *node = new TreeNode(city);
 	if (root == NULL) {
-		root = node;
+		return -1;
 	}
-
+	// TODO: clean code
+	else if (isLeaf(root->left), isLeaf(root->right)) {
+		return 1;
+	}
 	else {
-		add(node, root);
+		return 1 + max(height(root->left), height(root->right));
 	}
 }
+
+bool BinaryTree::isLeaf(TreeNode *node)
+{
+	if (node == NULL) {
+		return false;
+	}
+	else {
+		if (node->left == NULL && node->right == NULL) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void BinaryTree::inOrderTransversal(TreeNode *root)
+{
+	if (root != NULL) {
+		inOrderTransversal(root->left);
+		cout << root->city << endl;
+		inOrderTransversal(root->right);
+	}
+}
+
+	BinaryTree::BinaryTree() : root(NULL)
+	{
+	}
+
+	BinaryTree::~BinaryTree()
+	{
+		root = NULL;
+	}
+
+	void BinaryTree::add(City* city)
+	{
+		TreeNode *node = new TreeNode(city);
+		if (root == NULL) {
+			root = node;
+		}
+
+		else {
+			add(node, root);
+		}
+	}
+
+	int BinaryTree::height()
+	{
+		return height(root);
+	}
+
+	void BinaryTree::inOrderTransversal()
+	{
+		inOrderTransversal(root);
+	}

@@ -8,6 +8,9 @@ private:
 	TreeNode* root;
 	void add(TreeNode*, TreeNode*);
 	bool checkIFInTree(City*, TreeNode*);
+	int height(TreeNode*);
+	bool isLeaf(TreeNode*);
+	void inOrderTransversal(TreeNode*);
 
 public:
 	BinaryTree();
@@ -15,4 +18,6 @@ public:
 
 	// add and check if already in tree
 	void add(City*);
+	int height();
+	void inOrderTransversal();
 };

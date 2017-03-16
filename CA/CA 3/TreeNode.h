@@ -13,6 +13,4 @@ private:
 public:
 	TreeNode(City*);
 	~TreeNode();
-
-	bool isLeaf();
 };

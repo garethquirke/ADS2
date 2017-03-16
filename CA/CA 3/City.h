@@ -4,6 +4,9 @@ using namespace std;
 
 
 class City {
+
+	friend class TreeNode;
+
 private:
 	string name;
 	pair<double, double> coordinates;
@@ -15,7 +18,7 @@ public:
 	~City();
 
 	friend ostream& operator<<(ostream& os, const City& c);
-
+	friend ostream& operator<<(ostream& os, const City* c);
 
 	string getName();
 	pair<double, double> getCoordinates();
