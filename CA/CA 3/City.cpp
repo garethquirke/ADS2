@@ -40,4 +40,4 @@ ostream & operator<<(ostream & os, const City * c)
 	os << c->name << " " << c->coordinates.first << " degrees N " << c->coordinates.second << " degrees W " << c->population << " " << c->averageTemperature << " degrees celcius" << endl;
 	return os;
 }
-//  Dublin, 53.3498° N, 6.2603° W, 527,612, 10.0°C 
+//  Dublin, 53.3498° N, 6.2603° W, 527,612, 10.0°C 
