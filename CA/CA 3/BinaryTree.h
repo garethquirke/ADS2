@@ -16,7 +16,8 @@ private:
 	TreeNode* minValue(TreeNode*);
 
 	bool search(TreeNode*, string);
-	bool searchByCo(TreeNode*, pair<double, double>);
+	void inRange(pair<double, double>, pair<double, double>, TreeNode*);
+	bool isInRange(double,double,double,double,TreeNode*);
 
 public:
 	BinaryTree();
@@ -24,10 +25,12 @@ public:
 
 	// add and check if already in tree
 	void add(City*);
+	bool checkCoordinates(pair<double, double> coordinates);
 	int height();
 	void inOrderTransversal();
 
 	void deleteNode(string);
 	bool search(string);
-	bool searchByCo(double, double);
+
+	void inRange(pair<double, double>, pair<double, double>);
 };

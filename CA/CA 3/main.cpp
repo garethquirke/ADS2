@@ -14,6 +14,7 @@ int main() {
 	City *c5 = new City("Birmingham", make_pair(53.3498, 6.2603), 2900, 17.8);
 	City *c6 = new City("Aberdeen", make_pair(61.209, 8.56), 4000, 9.8);
 	City *c7 = new City("Reykjavík ", make_pair(45.998, 12.3), 5000, 3.1);
+	City *c8 = new City("Rio", make_pair(97.562, 192.162), 7000, 19.8);
 
 
 	cout << "Test of overloaded operator for output" << endl;
@@ -30,6 +31,8 @@ int main() {
 	tree.add(c5);
 	tree.add(c6);
 	tree.add(c7);
+	// adding a city outside of the specified coordinates
+	tree.add(c8);
 	cout << endl;
 
 	cout << "Transversal (in order) and height outputted" << endl;
@@ -53,57 +56,21 @@ int main() {
 	else {
 		cout << "Humberside was not found" << endl;
 	}
-	cout << "Search by coordinate" << endl;
-	find = tree.searchByCo(45.998, 12.3);
-	if (find) {
-		cout << "Reykjavík was found by it's coordinates" << endl;
-	}
-	else {
-		cout << "Reykjavík was not found" << endl;
-	}
-
-	// Method to add a node
 	cout << endl << endl;
 
-	/*int choice = 0;
-	while (choice != 3) {
-		cout << "Enter 1 to add a node" << endl;
-		cout << "Enter 2 to print the tree in order by name" << endl;
-		cout << "Enter 3 to exit" << endl;
-		cin >> choice;
 
-		if (choice == 1) {
-			string cityName;
-			int population;
-			double avgTemp;
-			pair<double, double> coordinates;
-			cout << "Enter city name: ";
-			cin >> cityName;
-			cout << "Enter co-ordinates for North: ";
-			cin >> coordinates.first;
-			cout << "Enter co-ordinates for West: ";
-			cin >> coordinates.second;
-			cout << "Enter population: ";
-			cin >> population;
-			cout << "Enter the average temperature: ";
-			cin >> avgTemp;
 
-			City city(cityName, coordinates, population, avgTemp);
-			City* c = &city;
-			tree.add(c);
-		}
-		else if (choice == 2) {
-			tree.inOrderTransversal();
-		}
-		else if (choice == 3) {
-			break;
-		}
-		else {
-			cout << "Invalid choice" << endl;
-			cout << "Choice: ";
-			cin >> choice;
-		}
-	}*/
+	cout << "Finding locations within a range" << endl;
+	// Testing out of bounds location
+	pair<double, double> point = make_pair(1.2, 5.9);
+	pair<double, double> range = make_pair(4.3, 8.9);
+	tree.inRange(point, range);
+
+	// Testing range with valid range
+	point = make_pair(0, 0);
+	range = make_pair(90, 120);
+	tree.inRange(point, range);
+
 	
 	system("pause");
 	return 0;

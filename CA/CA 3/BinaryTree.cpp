@@ -8,9 +8,15 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 {
 	// check if in tree first
 	bool verify = checkIFInTree(node->city, root);
+	bool withinRange = checkCoordinates(node->city->getCoordinates());
 	if (verify == true) {
 		cout << "Co-Ordinates already exsist in tree" << endl;
 	}
+	else if (withinRange == false) {
+		cout << "coordinate not within range" << endl;
+		cout << "must be between 0 -> 90 and 0 to 180 degrees" << endl;
+	}
+
 	else {
 		if (node->city->getName() < root->city->getName()) {
 			if (root->left == NULL) {
@@ -30,6 +36,16 @@ void BinaryTree::add(TreeNode *node, TreeNode *root)
 		}
 	}
 }
+
+bool BinaryTree::checkCoordinates(pair<double,double> coordinates)
+{
+	if (coordinates.first >= 0 && coordinates.first <= 90 && coordinates.second >= 0 && coordinates.second <= 180) {
+		//  latitude degrees will be in the northern hemisphere and all longitude degrees will be west of the Prime Meridian
+		return true;
+	}
+	return false;
+}
+
 
 /*
 Source: http://cslibrary.stanford.edu/110/BinaryTrees.html
@@ -175,23 +191,59 @@ bool BinaryTree::search(TreeNode *root, string city)
 	}
 	return false;
 }
-/*
-Source
-*/
-bool BinaryTree::searchByCo(TreeNode *root, pair<double, double> coordinates)
+
+void BinaryTree::inRange(pair<double, double> point, pair<double, double> distance, TreeNode *root)
 {
-	if (root == NULL) {
-		return false;
-	}
-	else {
-		if (root->city->getCoordinates() == coordinates) {
-			return true;
+	double x1 = point.first, y1 = point.second, x2 = distance.first, y2 = distance.second;
+	bool check;
+	/*
+	|	     .(x2, y2)
+	|       /
+	|      /     **********************************
+	|     /      Any points in here will be printed
+	|    /       **********************************
+	|   /
+	|  .(x1,y1)
+	|
+	|_____________________________
+	*/
+
+	// in order transversal, if within specified range -> output it
+
+	if (root != NULL) {
+		
+		inRange(point, distance, root->left);
+		check = isInRange(x1, y1, x2, y2, root);
+		if (check == true) {
+			cout << root->city;
 		}
-		else {
-			// search by left or right side till match and if it doesnt become a lost search ie null
-			return searchByCo(root->left, coordinates) || searchByCo(root->right, coordinates);
-		}
+		inRange(point, distance, root->right);
 	}
+}
+
+bool BinaryTree::isInRange(double x1, double y1, double x2, double y2, TreeNode *node)
+{
+	int check = 0;
+
+	if (node->city->getCoordinates().first >= x1) {
+		check++;
+	}
+	if (node->city->getCoordinates().first <= x2) {
+		check++;
+	}
+	if (node->city->getCoordinates().second >= y1) {
+		check++;
+	}
+	if (node->city->getCoordinates().second <= y2) {
+		check++;
+	}
+
+
+	if (check == 4) {
+		return true;
+	}
+	
+
 	return false;
 }
 
@@ -215,6 +267,7 @@ void BinaryTree::add(City* city)
 		add(node, root);
 	}
 }
+
 
 int BinaryTree::height()
 {
@@ -241,14 +294,14 @@ bool BinaryTree::search(string city)
 	}
 }
 
-bool BinaryTree::searchByCo(double c1, double c2)
+void BinaryTree::inRange(pair<double, double> point, pair<double, double> distance)
 {
-	if (root == NULL) {
-		return false;
+	bool check = checkCoordinates(point);
+	bool check2 = checkCoordinates(distance);
+	if (check == true && check2 == true) {
+		inRange(point, distance, root);
 	}
 	else {
-		pair<double, double> coordinates;
-		coordinates = make_pair(c1, c2);
-		return searchByCo(root, coordinates);
+		cout << "Not within correct range" << endl;
 	}
 }
