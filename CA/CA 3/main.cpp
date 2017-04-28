@@ -2,6 +2,7 @@
 #include "BinaryTree.h"
 #include "TreeNode.h"
 #include <string>
+#include <time.h>
 #include <iostream>
 #include <Windows.h>
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 
 /*
 Source: Mystical's answer for clocking CPU/Wall time
-Usage: used
+Usage: used (apart from the CPU time part)
 Availible: http://stackoverflow.com/questions/17432502/how-can-i-measure-cpu-time-and-wall-clock-time-on-both-linux-windows
 */
 double getWallTime() {
@@ -23,26 +24,17 @@ double getWallTime() {
 	}
 	return (double)time.QuadPart / freq.QuadPart;
 }
-double getCPUTime() {
-	FILETIME a, b, c, d;
-	if (GetProcessTimes(GetCurrentProcess(), &a, &b, &c, &d) != 0) {
-		//  Returns total user time.
-		//  Can be tweaked to include kernel times as well.
-		return
-			(double)(d.dwLowDateTime |
-			((unsigned long long)d.dwHighDateTime << 32)) * 0.0000001;
-	}
-	else {
-		//  Handle error
-		return 0;
-	}
-}
-
 
 int main() {
 
+/*
+Source: clock time -> Eskay's answer on stack overflow
+Usage: used
+Availible: http://stackoverflow.com/questions/2808398/easily-measure-elapsed-time
+*/
+
 	double walltime = getWallTime();
-	double cputime = getCPUTime();
+	clock_t cputime = clock();
 
 
 	City *c1 = new City("Dublin", make_pair(53.3498, 6.2603), 4500, 14.8);
@@ -74,18 +66,32 @@ int main() {
 	cout << endl;
 
 	// inserting 6 nodes time
-	double walltime1 = getWallTime();
-	double cputtime1 = getCPUTime();
-
+	double walltime1 = getWallTime() - walltime;
+	clock_t t2 = clock();
+	float cputime1 = ((((float)t2) - ((float)cputime)) /1000);
 
 	cout << "Transversal (in order) and height outputted" << endl;
 	tree.inOrderTransversal();
+	double walltime2 = getWallTime() - walltime1;
+	clock_t t3 = clock();
+	float cputime2 = ((((float)t3) - ((float)t2)) / 1000);
+
+
+
+
 	cout << "Height of Tree: " << tree.height() << endl;
 	cout << endl;
+	double walltime3 = getWallTime() - walltime2;
+	clock_t t4 = clock();
+	float cputime3 = ((((float)t4) - ((float)t3)) / 1000);
 
 	cout << "Delete method tests" << endl;
 	cout << "Attempt to delete node with a city name of Aberdeen" << endl;
 	tree.deleteNode("Aberdeen");
+	double walltime4 = getWallTime() - walltime3;
+	clock_t t5 = clock();
+	float cputime4 = ((((float)t5) - ((float)t4)) / 1000);
+
 	tree.inOrderTransversal();
 	cout << "Attempt to delete node with a city name of Foo" << endl;
 	tree.deleteNode("Foo");
@@ -93,6 +99,10 @@ int main() {
 
 	cout << "Search test" << endl;
 	bool find = tree.search("Humberside");
+	double walltime5 = getWallTime() - walltime4;
+	clock_t t6 = clock();
+	float cputime5 = ((((float)t6) - ((float)t5)) / 1000);
+
 	if (find) {
 		cout << "Humberside was found" << endl;
 	}
@@ -113,13 +123,39 @@ int main() {
 	point = make_pair(0, 0);
 	range = make_pair(90, 120);
 	tree.inRange(point, range);
+	double walltime6 = getWallTime() - walltime4;
+	clock_t t7 = clock();
+	float cputime6 = ((((float)t7) - ((float)t6)) / 1000);
 	cout << endl << endl;
 	
 
+
 	cout << "***CPU and Wall times***" << endl;
 	cout << "Time taken to insert 6 nodes to tree" << endl;
-	cout << "Wall Time " << walltime1 - walltime << "seconds" << endl;
-	cout << "CPU Time " << cputtime1 - cputime << " seconds" << endl;
+	cout << "Wall Time " << walltime1 << " seconds" << endl;
+	cout << "CPU Time " << cputime1 << " seconds" << endl << endl;
+
+	cout << "Time taken to tranverse the tree (in order)" << endl;
+	cout << "Wall Time " << walltime2 << " seconds" << endl;
+	cout << "CPU Time " << cputime2 << " seconds" << endl << endl;
+
+	cout << "Time taken to retrieve the height of the tree" << endl;
+	cout << "Wall Time " << walltime3 << " seconds" << endl;
+	cout << "CPU Time " << cputime3 << " seconds" << endl << endl;
+
+
+	cout << "Time taken to delete a node" << endl;
+	cout << "Wall Time " << walltime4 << " seconds" << endl;
+	cout << "CPU Time " << cputime4 << " seconds" << endl << endl;
+
+	cout << "Time taken to search for a node by name" << endl;
+	cout << "Wall Time " << walltime5 << " seconds" << endl;
+	cout << "CPU Time " << cputime5 << " seconds" << endl << endl;
+
+	cout << "Time taken to find nodes within range" << endl;
+	cout << "Wall Time " << walltime6 << " seconds" << endl;
+	cout << "CPU Time " << cputime6 << " seconds" << endl << endl;
+
 	cout << endl << endl;
 
 
