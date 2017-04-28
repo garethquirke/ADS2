@@ -3,9 +3,47 @@
 #include "TreeNode.h"
 #include <string>
 #include <iostream>
+#include <Windows.h>
 using namespace std;
 
+
+/*
+Source: Mystical's answer for clocking CPU/Wall time
+Usage: used
+Availible: http://stackoverflow.com/questions/17432502/how-can-i-measure-cpu-time-and-wall-clock-time-on-both-linux-windows
+*/
+double getWallTime() {
+	LARGE_INTEGER time, freq;
+	if (!QueryPerformanceFrequency(&freq)) {
+		return 0;
+	}
+	if (!QueryPerformanceCounter(&time)) {
+		//  Handle error
+		return 0;
+	}
+	return (double)time.QuadPart / freq.QuadPart;
+}
+double getCPUTime() {
+	FILETIME a, b, c, d;
+	if (GetProcessTimes(GetCurrentProcess(), &a, &b, &c, &d) != 0) {
+		//  Returns total user time.
+		//  Can be tweaked to include kernel times as well.
+		return
+			(double)(d.dwLowDateTime |
+			((unsigned long long)d.dwHighDateTime << 32)) * 0.0000001;
+	}
+	else {
+		//  Handle error
+		return 0;
+	}
+}
+
+
 int main() {
+
+	double walltime = getWallTime();
+	double cputime = getCPUTime();
+
 
 	City *c1 = new City("Dublin", make_pair(53.3498, 6.2603), 4500, 14.8);
 	City *c2 = new City("Dundee", make_pair(41.9, 76.8), 5000, 12.4);
@@ -34,6 +72,11 @@ int main() {
 	// adding a city outside of the specified coordinates
 	tree.add(c8);
 	cout << endl;
+
+	// inserting 6 nodes time
+	double walltime1 = getWallTime();
+	double cputtime1 = getCPUTime();
+
 
 	cout << "Transversal (in order) and height outputted" << endl;
 	tree.inOrderTransversal();
@@ -70,8 +113,16 @@ int main() {
 	point = make_pair(0, 0);
 	range = make_pair(90, 120);
 	tree.inRange(point, range);
-
+	cout << endl << endl;
 	
+
+	cout << "***CPU and Wall times***" << endl;
+	cout << "Time taken to insert 6 nodes to tree" << endl;
+	cout << "Wall Time " << walltime1 - walltime << "seconds" << endl;
+	cout << "CPU Time " << cputtime1 - cputime << " seconds" << endl;
+	cout << endl << endl;
+
+
 	system("pause");
 	return 0;
 }
