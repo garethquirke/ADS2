@@ -4,6 +4,16 @@
 #include <iostream>
 using namespace std;
 
+/*
+Note: 
+Regarding sources, most methods below are based on previous labs I completed.
+These were modified to suit the assignment of having a city object on the node
+and the other requirements mentioned in the CA.
+
+my original source for many of the methods was from stanford university and can
+be accessed through the following URL: http://cslibrary.stanford.edu/110/BinaryTrees.html
+*/
+
 void BinaryTree::add(TreeNode *node, TreeNode *root)
 {
 	// check if in tree first
@@ -78,7 +88,6 @@ int BinaryTree::height(TreeNode *root)
 	if (root == NULL) {
 		return -1;
 	}
-	// TODO: clean code
 	else if (isLeaf(root->left), isLeaf(root->right)) {
 		return 1;
 	}
@@ -172,7 +181,11 @@ TreeNode* BinaryTree::minValue(TreeNode *root)
 	}
 }
 
-// Search methods are based on the ones implemented in the previous labs
+/*
+Source: chqrlie's answer on stackoverflow
+Availible from: http://stackoverflow.com/questions/245628/c-binary-search-tree-recursive-search-function
+Usage: Based on
+*/
 bool BinaryTree::search(TreeNode *root, string city)
 {
 	if (root == NULL) {
