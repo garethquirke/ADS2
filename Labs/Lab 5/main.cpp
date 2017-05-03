@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 // Declarations
 // Define the total number of vertices - 8
-#define INFINITY 9999
+//#define INFINITY 9999
 #define MAX 8
 void dijkstra(int matrix[MAX][MAX], int vertices, int start);
 
@@ -108,6 +109,35 @@ void dijkstra(int matrix[MAX][MAX], int vertices, int start)
 			} while (j != start);
 		}
 	}
+}
 
 
+void dijkstra(int matrix[8][8], int vertices, int start) {
+	int distance[8];
+	int predecessors[8];
+	int completed[8];
+	int unfinished[8];
+
+	for (int i = 0; i < vertices; i++) {
+		distance[i] = INFINITY;
+		predecessors[i] = NULL;
+	}
+
+	// distance from the vertix to itself
+	distance[start] = 0;
+
+	// while the previous processed nodes is not full
+	while (predecessors[7] != NULL) {
+		for (int i = 0; i < vertices; i++) {
+			for (int j = 0; j < vertices; j++) {
+
+				if (distance[i] + length(distance[i], distance[j]) < distance[j]) {
+
+					distance[j] = distance[i] + length(distance[i], distance[j];
+					predecessors[j] = i;
+				}
+
+			}
+		}
+	}
 }
