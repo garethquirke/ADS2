@@ -15,6 +15,7 @@ void print(int distances[], int start);
 
 int main() {
 
+
 	/*
 	Each node has a collumn for the other nodes -> 8 x 8 2d array
 
