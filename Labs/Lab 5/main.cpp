@@ -5,10 +5,13 @@ using namespace std;
 
 // Declarations
 // Define the total number of vertices - 8
-//#define INFINITY 9999
-#define MAX 8
-void dijkstra(int matrix[MAX][MAX], int vertices, int start);
-
+const int V = 8;
+char letters[V] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+void dijkstraSP(int matrix[V][V], int start, int end);
+void dijkstraPathToAll(int matrix[V][V], int start);
+int minDistance(int distances[], bool predecessors[]);
+void print(int distances[], int start, int end);
+void print(int distances[], int start);
 
 int main() {
 
@@ -36,108 +39,123 @@ int main() {
 		{0, 1, 0, 0, 0, 3, 0, 0},
 	};
 
-	char letters[MAX] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+	dijkstraSP(adjacencyMatrix, 0, 7);
+	dijkstraSP(adjacencyMatrix, 3, 5);
 
 
-	dijkstra(adjacencyMatrix, 8, 0);
+	cout << "Shortest path to every other node for vertices A and D" << endl;
+	dijkstraPathToAll(adjacencyMatrix, 0);
+	dijkstraPathToAll(adjacencyMatrix, 3);
 
 	system("pause");
 	return 0;
 }
 
-void dijkstra(int matrix[MAX][MAX], int vertices, int start)
+/*
+Source: Dijkstras shortest path algorithm on geeks for geeks site
+Usage: Used
+Availible from: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+*/
+void dijkstraSP(int matrix[V][V], int start, int end) {
+	// output array and an array of previous vertices
+	int distances[V];
+	bool predecessors[V];
+
+	// declaring values for the array
+	for (int i = 0; i < V; i++) {
+		distances[i] = INT_MAX;
+		predecessors[i] = false;
+	}
+
+	// distance from start node will always be 0
+	distances[start] = 0;
+
+	for (int i = 0; i < V - 1; i++) {
+		// pick the closest neighbouring node
+		int min = minDistance(distances, predecessors);
+		// and now this node has been taken care of
+		predecessors[min] = true;
+
+
+		for (int j = 0; j < V; j++) {
+			if (!predecessors[j] && matrix[min][j] && distances[min] != INT_MAX && distances[min] + matrix[min][j] < distances[j]) {
+				distances[j] = distances[min] + matrix[min][j];
+			}
+		}
+	}
+	print(distances, start, end);
+}
+
+/*
+Source: Dijkstras shortest path algorithm on geeks for geeks site
+Usage: Used
+Availible from: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+*/
+void dijkstraPathToAll(int matrix[V][V], int start)
 {
-	int cost[MAX][MAX];
-	int distance[MAX];
-	int predecessor[MAX];
-	int visited[MAX];
-	int count, mindistance, next;
+	// output array and an array of previous vertices
+	int distances[V];
+	bool predecessors[V];
+
+	// declaring values for the array
+	for (int i = 0; i < V; i++) {
+		distances[i] = INT_MAX;
+		predecessors[i] = false;
+	}
+
+	// distance from start node will always be 0
+	distances[start] = 0;
+
+	for (int i = 0; i < V - 1; i++) {
+		// pick the closest neighbouring node
+		int min = minDistance(distances, predecessors);
+		// and now this node has been taken care of
+		predecessors[min] = true;
 
 
-	for (int i = 0; i < vertices; i++) {
-		for (int j = 0; j < vertices; j++) {
-			if (matrix[i][j] == 0) {
-				cost[i][j] = INFINITY;
-			}
-			else {
-				cost[i][j] = matrix[i][j];
+		for (int j = 0; j < V; j++) {
+			if (!predecessors[j] && matrix[min][j] && distances[min] != INT_MAX && distances[min] + matrix[min][j] < distances[j]) {
+				distances[j] = distances[min] + matrix[min][j];
 			}
 		}
 	}
 
-	for (int i = 0; i < vertices; i++) {
-		distance[i] = cost[start][i];
-		predecessor[i] = start;
-		visited[i] = 0;
-	}
+	print(distances, start);
 
-	distance[start] = 0;
-	visited[start] = 0;
-	count = 1;
+}
 
-	while (count < vertices - 1) {
-		mindistance = INFINITY;
+int minDistance(int distances[], bool predecessors[])
+{
+	int min = INT_MAX, min_index;
 
-		for (int i = 0; i < vertices; i++) {
-			if (distance[i] < mindistance && !visited[i]) {
-				mindistance = distance[i];
-				next = i;
-			}
-
-			visited[next] = 1;
-			for (int i = 0; i < vertices; i++) {
-				if (!visited[i]) {
-					if (mindistance + cost[next][i] < distance[i]) {
-						distance[i] = mindistance + cost[next][i];
-						predecessor[i] = next;
-					}
-				}
-			}
-			count++;
+	for (int i = 0; i < V; i++) {
+		if (predecessors[i] == false && distances[i] <= min) {
+			min = distances[i];
+			min_index = i;
 		}
 	}
 
-	for (int i = 0; i < vertices; i++) {
-		if (i != start) {
-			cout << "Node: " << i << " Distance: " << distance[i] << endl;
-			cout << "Path: " << i << endl;
-			int j = i;
-			do 
-			{
-				j = predecessor[j];
-				cout << j << endl;
-			} while (j != start);
-		}
-	}
+	return min_index;
+}
+
+void print(int distances[], int start, int end)
+{
+	cout << "Shortest path between " << letters[start] << " and " << letters[end] << " is " << distances[end] << endl;
 }
 
 
-void dijkstra(int matrix[8][8], int vertices, int start) {
-	int distance[8];
-	int predecessors[8];
-	int completed[8];
-	int unfinished[8];
+void print(int distances[], int start) {
 
-	for (int i = 0; i < vertices; i++) {
-		distance[i] = INFINITY;
-		predecessors[i] = NULL;
-	}
+	// now just print the entire array of distances rather than outputting the sp between two points
 
-	// distance from the vertix to itself
-	distance[start] = 0;
-
-	// while the previous processed nodes is not full
-	while (predecessors[7] != NULL) {
-		for (int i = 0; i < vertices; i++) {
-			for (int j = 0; j < vertices; j++) {
-
-				if (distance[i] + length(distance[i], distance[j]) < distance[j]) {
-
-					distance[j] = distance[i] + length(distance[i], distance[j];
-					predecessors[j] = i;
-				}
-
+	cout << "Vertex: " << letters[start] << endl;
+	for (int i = 0; i < V; i++) {
+		if (i != 0) {
+			// omit the actual node thats being checked
+			if (i == start) {
+				i++;
 			}
+			cout << "Distance to " << letters[i] << " is " << distances[i] << endl;
 		}
 	}
 }
