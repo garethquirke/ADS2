@@ -39,12 +39,15 @@ int main() {
 		{0, 1, 0, 0, 0, 3, 0, 0},
 	};
 
+	cout << "Shortest path between two nodes on the graph" << endl;
 	dijkstraSP(adjacencyMatrix, 0, 7);
 	dijkstraSP(adjacencyMatrix, 3, 5);
 
+	cout << endl << endl;
 
 	cout << "Shortest path to every other node for vertices A and D" << endl;
 	dijkstraPathToAll(adjacencyMatrix, 0);
+	cout << endl;
 	dijkstraPathToAll(adjacencyMatrix, 3);
 
 	system("pause");
